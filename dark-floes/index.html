@@ -1300,6 +1300,7 @@ function startFight() {
   fight = 'on';
   boss.state = 'roar'; boss.t = 0; boss.face = Math.atan2(player.pos.x - boss.pos.x, player.pos.z - boss.pos.z);
   $('boss').hidden = false; bossLagV = 1;
+  fogGate.visible = false; // the player is sealed in the arena; the mist would only block the camera
   startMusic(); sfx.roar(); shake = 0.6;
 }
 function bossFelled() {
@@ -1333,7 +1334,7 @@ function respawn() {
   for (const e of enemies) if (!e.boss || fight !== 'done') resetEnemy(e);
   for (const w of waves) { scene.remove(w.mesh); w.mesh.geometry.dispose(); } waves.length = 0;
   warnRing.material.opacity = 0;
-  if (fight === 'on') { fight = 'sleep'; stopMusic(); $('boss').hidden = true; }
+  if (fight === 'on') { fight = 'sleep'; stopMusic(); $('boss').hidden = true; fogGate.visible = true; }
   placeAtHearth(lastHearth);
   later(0.4, () => $('fade').classList.remove('on'));
 }
